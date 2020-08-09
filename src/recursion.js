@@ -163,6 +163,10 @@ var reverseArr = function(array) {
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  let result = []
+  if (length === 0) return result
+  result.push(value)
+  return result.concat(buildList(value, length - 1))
 };
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
@@ -171,7 +175,23 @@ var buildList = function(value, length) {
 // For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number.
 // fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
 var fizzBuzz = function(n) {
+  let result = []
+  if (n === 0) return result
+
+  if (n % 3 === 0 && n % 5 === 0) {
+    result.push('FizzBuzz')
+  }else if (n % 3 === 0) {
+    result.push('Fizz')
+  } else if (n % 5 === 0) {
+    result.push('Buzz')
+  }else {
+    result.push(`${n}`)
+  }
+
+  return fizzBuzz(n - 1).concat(result)
 };
+
+console.log(fizzBuzz(15)) // ['1','2','Fizz','4','Buzz']
 
 // 20. Count the occurence of a value in a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
