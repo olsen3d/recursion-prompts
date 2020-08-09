@@ -35,11 +35,7 @@ var isEven = function(n) {
   let result = true
   if (n === 0) return result
   !result
-  return isEven(n-1)
-
-  //come back to this
-
-
+  return isEven(n < 0 ? n + 1 : n - 1)
 };
 
 // 5. Sum all integers below a given integer.
@@ -53,17 +49,15 @@ var sumBelow = function(n) {
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
-  // if (x > y) {
-  //   let temp = x
-  //   x = y
-  //   y = temp
-  // }
-  // const result = []
-  // result.push(x + 1)
-  // if (x + 1 === y - 1) return result
-  // return result.concat(range(x + 1, y))
-
-  //come back to this
+  if (x > y) {
+    let temp = x
+    x = y
+    y = temp
+  }
+  const result = []
+  result.push(x + 1)
+  if (x + 1 === y - 1) return result
+  return result.concat(range(x + 1, y))
 };
 
 // 7. Compute the exponent of a number.
@@ -109,14 +103,17 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
-  // if (y === 0) return NaN
-  // if (y > x) return x
-  // return modulo(x - y, y)
+  if (y === 0) return NaN
+  if (y > x) return x
+  return modulo(x - y, y)
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 var multiply = function(x, y) {
+  if (y < 0) x = -x, y = -y
+  if (y === 0) return 0
+  return x + multiply(x, y - 1)
 };
 
 // 13. Write a function that divides two numbers without using the / operator or
@@ -137,15 +134,29 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  if (str1.length === 0 && str2.length !== 0) return false
+  if (str1.length !== 0 && str2.length === 0) return false
+  if (str1.length === 0 && str2.length === 0) return true
+  if (str1[0] === str2[0]) return compareStr(str1.slice(1), str2.slice(1))
+  else return false
 };
+
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str) {
+  let result = []
+  if (!str.length) return result
+  result.push(str[0])
+  return result.concat(createArray(str.slice(1)))
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function(array) {
+  let result = []
+  if (!array.length) return result
+  result.push(array.pop())
+  return result.concat(reverseArr(array))
 };
 
 // 18. Create a new array with a given value and length.
